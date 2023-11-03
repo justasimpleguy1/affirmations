@@ -6,13 +6,14 @@ import "./App.css";
 
 function App(props) {
   const [affirmation, setAffirmation] = useState(null);
+  const [refresh, setRefresh] = useState(null);
   const { featureFlags } = props;
 
   useEffect(() => {
     const randomIndex = Math.floor(Math.random() * affirmations.length);
     const affirmationObject = affirmations.at(randomIndex);
     setAffirmation(affirmationObject);
-  }, []);
+  }, [refresh]);
 
   const shareAffirmation = (e) => {
     e.preventDefault();
@@ -36,6 +37,9 @@ function App(props) {
           </div>
         )}
       </div>
+      {featureFlags?.enableRefresh && (
+        <p onClick={() => setRefresh((prev) => !prev)}>Refresh</p>
+      )}
       <div className="bottom">
         Made with <span className="heartbeat">❤️</span>
       </div>
